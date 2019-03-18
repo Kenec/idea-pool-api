@@ -1,0 +1,36 @@
+{
+  "name": "idea-pool-api",
+  "version": "1.0.0",
+  "description": "idea pool api",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "start:dev": "nodemon --exec babel-node server/index.js",
+    "build": "babel ./server --out-dir dist/ --copy-files",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kenec/idea-pool-api.git"
+  },
+  "author": "Nnamani Kenechukwu Charles",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kenec/idea-pool-api/issues"
+  },
+  "homepage": "https://github.com/Kenec/idea-pool-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10"
+  }
+}
