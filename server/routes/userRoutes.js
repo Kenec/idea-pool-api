@@ -1,9 +1,14 @@
 import express from 'express';
+import usersController from '../controllers/users';
+import userMiddleware from '../middlewares/user';
 
 const userRoutes = express.Router();
 
-userRoutes.get('/', (req, res) => {
-  return res.status(200).json({ message: 'Signed up successfully' });
-});
+userRoutes.post('/', 
+  userMiddleware.validateName,
+  userMiddleware.validateEmail,
+  userMiddleware.validatePassword,
+  userMiddleware.userExists,
+  usersController.signup);
 
 export default userRoutes;
