@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import md5 from 'md5';
 import User from '../models/Users';
 import client from '../config/redis';
 
@@ -34,5 +35,20 @@ export default class Users {
 
       return res.status(201).json(response);
     });
+  }
+
+  /**
+   * CurrentUser - get the current user detail
+   * @param {object} req 
+   * @param {object} res
+   * @returns {object} 
+   */
+  static currentUser(req, res) {
+    if (!req.headers['x-access-token']) return res.status(404).json({ error: 'Token not found' });
+
+    const { name, email } = jwt.decode(req.headers['x-access-token']);
+    const imageHash = md5(email);
+    
+    return res.status(200).json({ email, name, avatar_url: `https://www.gravatar.com/avatar/${imageHash}?d=mm&s=200` });
   }
 }
