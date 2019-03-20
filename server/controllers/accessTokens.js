@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import User from '../models/Users';
 import client from '../config/redis';
 
 /**
@@ -39,4 +40,31 @@ export default class AccessTokens {
       }
     });
   }
+
+  /**
+   * login - Authenticates already existing user
+   * @param {object} req 
+   * @param {object} res
+   * @returns {object} 
+   */
+  static login(req, res) {
+    const { email, password } = req.body;
+
+    User.findOne({ email }, (error, user) => {
+      if (error) return res.status(500).send({ error: 'There seems to be some issue. Try agin!' });
+      if (user === null) return res.status(401).send({ error: 'User does not exist' });
+      
+      const validPassword = bcrypt.compareSync(password, user.password);
+      if (!validPassword) return res.status(401).send({ error: 'User does not exits' });
+
+      const token = jwt.sign({ id: user._id, name: user.name, email: user.email }, process.env.JWT_ACCESS_TOKEN, { expiresIn: 600 });
+      const refresh_token = jwt.sign({ id: user._id, name: user.name, email: user.email }, process.env.JWT_REFRESH_TOKEN, { expiresIn: 86400 });
+
+      const response = { jwt: token, refresh_token };
+      client.set(refresh_token, JSON.stringify(response));
+
+      return res.status(201).json(response);
+    });
+  }
+
 }
