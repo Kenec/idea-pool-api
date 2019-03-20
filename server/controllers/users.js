@@ -26,8 +26,8 @@ export default class Users {
     newUser.save(error => {
       if (error) return res.status(500).json({ error:'Error while saving..', error });
 
-      const token = jwt.sign({ id: newUser._id, name, email }, process.env.JWT_SECRET, { expiresIn: 600 });
-      const refresh_token = jwt.sign({ id: newUser._id, name, email }, process.env.JWT_ACCESS_TOKEN, { expiresIn: 86400 });
+      const token = jwt.sign({ id: newUser._id, name, email }, process.env.JWT_ACCESS_TOKEN, { expiresIn: 600 });
+      const refresh_token = jwt.sign({ id: newUser._id, name, email }, process.env.JWT_REFRESH_TOKEN, { expiresIn: 86400 });
 
       const response = { jwt: token, refresh_token };
       client.set(refresh_token, JSON.stringify(response));

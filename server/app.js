@@ -26,6 +26,6 @@ client.on('error', error => console.error('ERR:REDIS:', error));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/api/v1', routes);
+app.use('/', routes);
 
 export default app;
