@@ -87,7 +87,6 @@ export default class AccessTokens {
             client.del(req.body.refresh_token, (error, response) => {
               if (response === 1) {
                 delete req.headers['x-access-token'];
-                console.log(req.headers);
                 return res.status(204).json({})
               } else {
                 return res.status(200).json({ message: 'User not logged out '});
