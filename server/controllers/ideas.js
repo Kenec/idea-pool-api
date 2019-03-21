@@ -13,13 +13,12 @@ export default class Ideas {
     const newImpact = parseInt(impact, 10);
     const newEase = parseInt(ease, 10);
     const newConfidence = parseInt(confidence, 10);
-    
-    const newIdea = new Idea({ content, impact: newImpact, ease: newEase, confidence:newConfidence });
+
+    const average_score = parseFloat((newImpact + newEase + newConfidence) / 3);
+    const newIdea = new Idea({ content, impact: newImpact, ease: newEase, confidence: newConfidence, average_score });
 
     newIdea.save(error => {
       if (error) return res.status(500).json({ error:'Error while saving..', error });
-
-      const average_score = ((newImpact + newEase + newConfidence) / 3).toFixed(1);
 
       const response = { 
           id: newIdea._id, 

@@ -17,6 +17,10 @@ const IdeaSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  average_score: {
+    type: Number,
+    required: true
+  },
   create_date: {
     type: Date,
     default: Date.now
