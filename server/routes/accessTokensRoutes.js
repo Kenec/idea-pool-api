@@ -12,8 +12,8 @@ accessTokensRoutes.post('/',
   accessTokenController.login);
 
 accessTokensRoutes.delete('/',
-  accessTokenMiddleware.validateRefreshToken,
   jwtAuth,
+  accessTokenMiddleware.validateRefreshToken,
   accessTokenController.logout)
 
 accessTokensRoutes.post('/refresh',
