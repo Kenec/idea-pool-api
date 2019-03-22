@@ -43,8 +43,12 @@ export default class Ideas {
   static getIdea(req, res) {
     let perPage = 10;
     let page = req.params.page || 1;
+    let order = -1;
 
+    if (req.query.order) { order === 'asc' ? order = 1 : order = -1 }
+    
     Idea.find({})
+      .sort({ average_score: order })
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .exec((err, ideas) => {
